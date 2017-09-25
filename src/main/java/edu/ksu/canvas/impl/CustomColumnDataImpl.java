@@ -4,7 +4,11 @@ package edu.ksu.canvas.impl;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import org.apache.log4j.Logger;
 
@@ -15,6 +19,7 @@ import edu.ksu.canvas.interfaces.CustomColumnDataReader;
 import edu.ksu.canvas.interfaces.CustomColumnDataWriter;
 import edu.ksu.canvas.model.ColumnDatum;
 import edu.ksu.canvas.model.CustomColumn;
+import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 
@@ -34,7 +39,25 @@ public class CustomColumnDataImpl extends BaseImpl<ColumnDatum, CustomColumnData
         return getListFromCanvas(url);
 	}
 
+	@Override
+	public Optional<ColumnDatum> updateCustomColumn(Integer courseId, CustomColumn col, Integer userId, String data) throws IOException {
+		Map<String, List<String>> postParameters = new HashMap<>();
+		postParameters.put("column_data[content]", Collections.singletonList(data));
+		String url = buildCanvasUrl("/courses/" + courseId + "/custom_gradebook_columns/" + col.getId() + "/data/" + userId, Collections.emptyMap());
+		LOG.debug("create URI for custom column updation : " + url);
+		Response response = canvasMessenger.putToCanvas(oauthToken, url, postParameters);
+        if (response.getErrorHappened() || ( response.getResponseCode() != 200)) {
+            LOG.debug("Failed to create columns, error message: " + response.toString());
+            return Optional.empty();
+        }
+        return responseParser.parseToObject(ColumnDatum.class,response);
+	}
 	
+	@Override
+	public void deleteCustomColumn(Integer courseId, CustomColumn col, Integer userId) throws IOException {
+		updateCustomColumn(courseId, col, userId, "");
+	}
+
     @Override
     protected Type listType() {
         return new TypeToken<List<ColumnDatum>>(){}.getType();
@@ -44,6 +67,5 @@ public class CustomColumnDataImpl extends BaseImpl<ColumnDatum, CustomColumnData
     protected Class<ColumnDatum> objectType() {
         return ColumnDatum.class;
     }
-
 
 }
