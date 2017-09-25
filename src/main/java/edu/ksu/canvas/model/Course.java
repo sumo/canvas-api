@@ -32,6 +32,7 @@ public class Course extends BaseCanvasModel implements Serializable {
     private String workflowState;
     private Integer totalStudents;
     private Long enrollmentTermId;
+    private Integer rootAccountId;
 
     private List<Section> sections;
     private List<Enrollment> enrollments;
@@ -202,4 +203,12 @@ public class Course extends BaseCanvasModel implements Serializable {
     public void setEnrollments(List<Enrollment> enrollments) {
         this.enrollments = enrollments;
     }
+
+	public Integer getRootAccountId() {
+		return rootAccountId;
+	}
+
+	public void setRootAccountId(Integer rootAccountId) {
+		this.rootAccountId = rootAccountId;
+	}
 }

@@ -149,6 +149,7 @@ public class CanvasApiFactory {
         readerMap.put(ExternalToolReader.class, ExternalToolImpl.class);
         readerMap.put(CustomColumnReader.class, CustomColumnsImpl.class);
         readerMap.put(CustomColumnDataReader.class, CustomColumnDataImpl.class);
+        readerMap.put(GradingStandardReader.class, GradingStandardImpl.class);
         
         writerMap.put(AssignmentOverrideWriter.class, AssignmentOverrideImpl.class);
         writerMap.put(AssignmentWriter.class, AssignmentImpl.class);
@@ -169,5 +170,6 @@ public class CanvasApiFactory {
         writerMap.put(ExternalToolWriter.class, ExternalToolImpl.class);
         writerMap.put(CustomColumnWriter.class, CustomColumnsImpl.class);
         writerMap.put(CustomColumnDataWriter.class, CustomColumnDataImpl.class);
+        writerMap.put(GradingStandardWriter.class, GradingStandardImpl.class);
     }
 }
