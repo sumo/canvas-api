@@ -40,7 +40,7 @@ public class CustomColumnDataImpl extends BaseImpl<ColumnDatum, CustomColumnData
 	}
 
 	@Override
-	public Optional<ColumnDatum> updateCustomColumn(Integer courseId, CustomColumn col, Integer userId, String data) throws IOException {
+	public Optional<ColumnDatum> updateCustomColumn(Integer courseId, CustomColumn col, String userId, String data) throws IOException {
 		Map<String, List<String>> postParameters = new HashMap<>();
 		postParameters.put("column_data[content]", Collections.singletonList(data));
 		String url = buildCanvasUrl("/courses/" + courseId + "/custom_gradebook_columns/" + col.getId() + "/data/" + userId, Collections.emptyMap());
@@ -54,7 +54,7 @@ public class CustomColumnDataImpl extends BaseImpl<ColumnDatum, CustomColumnData
 	}
 	
 	@Override
-	public void deleteCustomColumn(Integer courseId, CustomColumn col, Integer userId) throws IOException {
+	public void deleteCustomColumn(Integer courseId, CustomColumn col, String userId) throws IOException {
 		updateCustomColumn(courseId, col, userId, "");
 	}
 

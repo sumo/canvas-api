@@ -8,7 +8,7 @@ import edu.ksu.canvas.model.CustomColumn;
 
 public interface CustomColumnDataWriter extends CanvasWriter<ColumnDatum, CustomColumnDataWriter> {
 
-	public Optional<ColumnDatum> updateCustomColumn(Integer courseId, CustomColumn col, Integer userId, String data) throws IOException;
+	public Optional<ColumnDatum> updateCustomColumn(Integer courseId, CustomColumn col, String userId, String data) throws IOException;
 
-	public void deleteCustomColumn(Integer courseId, CustomColumn col, Integer userId) throws IOException;
+	public void deleteCustomColumn(Integer courseId, CustomColumn col, String userId) throws IOException;
 }
